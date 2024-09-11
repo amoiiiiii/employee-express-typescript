@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import employeeRoutes from './routes/employeeRoutes';
+import attendanceRoutes from './routes/attendanceRoutes'
 import { swaggerUi, swaggerSpec } from './swagger';
 
 const app = express();
@@ -13,6 +14,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Routes
 app.use(employeeRoutes);
+app.use(attendanceRoutes);
 
 // Error handling middleware
 app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {

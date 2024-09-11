@@ -7,13 +7,24 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model Attendance {
+  id          Int      @id @default(autoincrement())
+  id_employee Int
+  checkIn     DateTime
+  checkOut    DateTime?
+  status      String   @default("checked-in")
+
+  employee    Employee @relation(fields: [id_employee], references: [id], onDelete: Cascade)
+}
+
 model Employee {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  password  String
-  position  String
-  phone     String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          Int          @id @default(autoincrement())
+  name        String
+  email       String       @unique
+  password    String
+  position    String
+  phone       String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  attendances Attendance[]
 }
