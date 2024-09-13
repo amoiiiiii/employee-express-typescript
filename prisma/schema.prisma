@@ -8,13 +8,14 @@ generator client {
 }
 
 model Attendance {
-  id          Int      @id @default(autoincrement())
-  id_employee Int
-  checkIn     DateTime
+  id          Int       @id @default(autoincrement())
+  date        DateTime  @default(now())
+  checkIn     DateTime?
   checkOut    DateTime?
-  status      String   @default("checked-in")
+  employee    Employee  @relation(fields: [employeeId], references: [id])
+  employeeId  Int
 
-  employee    Employee @relation(fields: [id_employee], references: [id], onDelete: Cascade)
+  @@map("attendance")
 }
 
 model Employee {

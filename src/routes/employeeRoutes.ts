@@ -27,13 +27,13 @@ const router = Router();
  *             properties:
  *               name:
  *                 type: string
- *                 example: Rahma Ayu
+ *                 example: Rahma Ayu Andari
  *               email:
  *                 type: string
- *                 example: amoi.u@example.com
+ *                 example: aamoiu@gmail.com
  *               password:
  *                 type: string
- *                 example: password123
+ *                 example: defaultpassword
  *               position:
  *                 type: string
  *                 example: developer
@@ -122,15 +122,33 @@ router.put('/employees/:id', updateEmployee);
  *         description: Employee deleted successfully
  */
 router.delete('/employees/:id', deleteEmployee);
-
 /**
  * @swagger
  * /login:
  *   post:
- *     summary: Log in an employee
+ *     summary: User login
+ *     description: Allows a user to log in and receive a token
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 example: user@gmail.com
+ *               password:
+ *                 type: string
+ *                 example: defaultpassword
  *     responses:
  *       200:
- *         description: Login successful
+ *         description: Successfully logged in
+ *       400:
+ *         description: Invalid credentials
+ *       500:
+ *         description: Internal server error
  */
 router.post('/login', loginEmployee);
 
