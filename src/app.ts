@@ -1,14 +1,29 @@
-import express, { Application, Request, Response } from 'express';
+import express from 'express';
+import bodyParser from 'body-parser';
+import employeeRoutes from './routes/employeeRoutes';
+import attendanceRoutes from './routes/attendanceRoutes'
+import { swaggerUi, swaggerSpec } from './swagger';
 
-const app: Application = express();
-const port = 3000;
+const app = express();
 
-app.use(express.json());
+// Middleware
+app.use(bodyParser.json());
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Hello from Express with TypeScript!');
+// Swagger setup
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// Routes
+app.use(employeeRoutes);
+app.use(attendanceRoutes); 
+
+// Error handling middleware
+app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+// Start the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
